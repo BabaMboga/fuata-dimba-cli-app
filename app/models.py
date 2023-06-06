@@ -26,7 +26,7 @@ class Team(Base):
 
     def __init__(self, team_name, played_games, won_games, 
                  lost_games, drawn_games, goals_scored, 
-                 goals_allowed, points):
+                 goals_allowed):
         self.team_name = team_name
         self.played_games = played_games
         self.won_games = won_games
@@ -55,8 +55,31 @@ class Coach(Base):
         self.team_id = team_id
 
 class Player(Base):
-    __table
+    __tablename__ = 'players'
+
+    id = Column(Integer(), primary_key = True)
+    first_name = Column(String())
+    second_name = Column(String())
+    nationality = Column(String())
+    age = Column(String())
+    player_id = Column(Integer(), ForeignKey("player.id"))
+
+    
+
+class PlayerStat(Base):
+    __tablename__ = 'playerstats'
+
+    id = Column(Integer(), primary_key = True)
+    shots = Column(Integer())
+    goals = Column(Integer())
+    assists = Column(Integer())
+    pass_completion_percentage = Column(Integer())
+    clean_sheets = Column(Integer())
+    conversion_rate = Column(Integer())
+    yellow_cards = Column(Integer())
+    red_cards = Column(Integer())
+    player = relationship('Player', backref=backref('playerstat', uselist=False))
 
 
 
-Base.metadata.create_all(engine)
+
