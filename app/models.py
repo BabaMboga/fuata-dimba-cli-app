@@ -78,6 +78,7 @@ class PlayerStat(Base):
     shots = Column(Integer())
     goals = Column(Integer())
     assists = Column(Integer())
+    goal_contributions = Column(Integer())
     pass_completion_percentage = Column(Integer())
     clean_sheets = Column(Integer())
     conversion_rate = Column(Integer())
