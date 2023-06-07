@@ -118,15 +118,39 @@ def find_coach():
 
 #show all coaches in the database
 def view_coaches():
-    pass
+    coaches = session.query(Coach).all()
+    if coaches:
+        print(f"All Coaches: ")
+        print("-----------")
+        print("")
+        for coach in coaches:
+            print(f" - {coach.full_name} from {coach.nationality} is {coach.age}")
+    else:
+        print("No coaches found.")
 
 #view all players for a particular coach
 def view_coach_players():
-    pass
+    coach_name = input("Enter the coach name: ")
+    coach = session.query(Coach).filter_by(full_name=coach_name).first()
+    if coach:
+        players = session.query(Player).join(team_player).filter(team_player.c.team_id == coach.team.id).all()
+        for player in players:
+            print(f"Player: {player.full_name}")
+    else:
+        print("Coach not found.")
 
 #view all players in the database
 def view_players():
-    pass
+    players = session.query(Player).all()
+    if players:
+        print("All Players: ")
+        print("-----------")
+        for player in players:
+            print(f"{player.id} {player.full_name}")
+    else:
+        print("No players found.")
+
+    
 
 #view stat for a particular player by name
 def view_playerstat():
