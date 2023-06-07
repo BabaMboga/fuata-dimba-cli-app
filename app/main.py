@@ -69,15 +69,38 @@ def players_in_team():
 
 #sort teams by goal difference
 def sort_team_goal_difference():
-    pass
+    teams = session.query(Team).order_by(Team.goal_difference.desc()).all()
+    if teams:
+        print("Teams sorted by Goal Difference:")
+        print("*******")
+        for team in teams:
+            print(f"Team: {team.team_name}")
+            print(f"Goal Difference: {team.goal_difference}")
+            print("-----------")
+    else:
+        print("No teams found.")
 
 #sort team by games won
 def sort_team_wins():
-    pass
+    teams = session.query(Team).order_by(Team.won_games.desc()).all()
+    if teams:
+        print("Teams sorted by Wins:")
+        print("-----------")
+        for team in teams:
+            print(f" -{team.team_name} (Wins: {team.won_games})")
+    else:
+        print("No teams found.")
 
 #sort team by games lost
 def sort_team_losses():
-    pass
+    teams = session.query(Team).order_by(Team.lost_games.desc()).all()
+    if teams:
+        print("Teams sorted by Losses: ")
+        print("-----------")
+        for team in teams:
+            print(f"- {team.team_name} (Losses: {team.lost_games})")
+    else:
+        print("No teams found.")
 
 #find the coach for a particular team
 def find_coach():
