@@ -1,21 +1,38 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, MetaData
+from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, Table
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
 convention = {
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%referred_table_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 }
 
 metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
+team_coach = Table(
+    'team_coaches',
+    Base.metadata,
+    Column('team_id', ForeignKey('teams.id'), primary_key=True),
+    Column('coach_id', ForeignKey('coaches.id'), primary_key=True),
+    extend_existing=True
+)
+
+team_player = Table(
+    'team_players',
+    Base.metadata,
+    Column('team_id', ForeignKey('teams.id'), primary_key=True),
+    Column('player_id', ForeignKey('players.id'), primary_key=True),
+    extend_existing=True
+)
+
+
 class Team(Base):
     __tablename__ = 'teams'
 
-    id = Column(Integer(), primary_key = True)
+    id = Column(Integer(), primary_key=True)
     team_name = Column(String())
-    played_games = Column(Integer, default = 38)
+    played_games = Column(Integer, default=38)
     won_games = Column(Integer)
     lost_games = Column(Integer)
     drawn_games = Column(Integer)
@@ -24,52 +41,40 @@ class Team(Base):
     goal_difference = Column(Integer)
     points = Column(Integer)
 
-    def __init__(self, team_name, played_games, won_games, 
-                 lost_games, drawn_games, goals_scored, 
-                 goals_allowed):
-        self.team_name = team_name
-        self.played_games = played_games
-        self.won_games = won_games
-        self.lost_games = lost_games
-        self.drawn_games = drawn_games
-        self.goals_scored = goals_scored
-        self.goals_allowed = goals_allowed
-        self.goal_difference = (goals_scored - goals_allowed)
-        self.points = (won_games*3)
+    coach_id = Column(Integer(), ForeignKey('coaches.id'), unique=True)
+
+    players = relationship('Player', secondary=team_player, backref=backref('teams', lazy='dynamic'))
+
 
 class Coach(Base):
     __tablename__ = 'coaches'
 
-    id = Column(Integer(), primary_key = True)
+    id = Column(Integer(), primary_key=True)
     first_name = Column(String())
     second_name = Column(String())
     nationality = Column(String())
     age = Column(Integer())
-    team_id = Column(Integer())
 
-    def __init__(self, first_name, second_name, nationality, age, team_id):
-        self.first_name = first_name
-        self.second_name = second_name
-        self.nationality = nationality
-        self.age = age
-        self.team_id = team_id
+    players = relationship('Player', backref=backref('coach'))
+    team = relationship('Team', backref=backref('coach', uselist=False))
+
 
 class Player(Base):
     __tablename__ = 'players'
 
-    id = Column(Integer(), primary_key = True)
+    id = Column(Integer(), primary_key=True)
     first_name = Column(String())
     second_name = Column(String())
     nationality = Column(String())
     age = Column(String())
-    player_id = Column(Integer(), ForeignKey("player.id"))
 
-    
+    coach_id = Column(Integer(), ForeignKey('coaches.id'))
+
 
 class PlayerStat(Base):
     __tablename__ = 'playerstats'
 
-    id = Column(Integer(), primary_key = True)
+    id = Column(Integer(), primary_key=True)
     shots = Column(Integer())
     goals = Column(Integer())
     assists = Column(Integer())
@@ -78,8 +83,6 @@ class PlayerStat(Base):
     conversion_rate = Column(Integer())
     yellow_cards = Column(Integer())
     red_cards = Column(Integer())
+    player_id = Column(Integer(), ForeignKey("players.id"), unique=True)
+
     player = relationship('Player', backref=backref('playerstat', uselist=False))
-
-
-
-

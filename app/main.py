@@ -1,10 +1,11 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
-
-
-from models import Team, Coach, Player, player_stats, team_coach
-
 from sqlalchemy.ext.declarative import declarative_base
+
+
+from models import Team, Coach, Player, PlayerStat, team_coach, team_player
+
+
 
 convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%referred_table_name)s",
