@@ -203,16 +203,64 @@ def top_twenty_scorers_report():
 
 #display the top twenty assisters
 def top_twenty_assisters():
-    pass
+    players = session.query(Player).join(PlayerStat).order_by(PlayerStat.assists.desc()).limit(20).all()
+    if players:
+        print("Top 20 Assisters:")
+        print("******")
+        for player in players:
+            print(f"Player: {player.full_name} ===== {player.playstat.assists}")
+            print("----------")
+
+    else:
+        print("No players found.")
 
 #displays the player with the most yellow and red cards together
 def most_indisciplined_player():
-    pass
+    players = session.query(Player).all()
+    indiscipline = []
+    for player in players:
+        player_stat = session.query(PlayerStat).filter_by(player_id=player.id).first()
+        if player_stat:
+            total_cards = player_stat.yellow_cards + player_stat.red_cards
+            indiscipline.append((player.full_name, total_cards))
+    if indiscipline:
+        sorted_indiscipline = sorted(indiscipline, key=lambda x: x[1], reverse=True)
+        most_indisciplined, total_cards = sorted_indiscipline[0]
+        print(f"Most Indisciplined Player: {most_indisciplined} (Total Cards: {total_cards})")
+    else:
+        print("No player indiscipline found.")
+    
 
 #displays the top 50 players in goal contributions and generate a report on txt reflexting the same
 def top_def_50_goal_contributions_report():
-    pass
+    players = session.query(Player).all()
+    player_contributions = []
+    for player in players:
+        player_stat = session.query(PlayerStat).filter_by(player_id=player.id).first()
+        if player_stat:
+            contribution = player_stat.goals + player_stat.assists
+            player_contributions.append((player.full_name, contribution))
 
+    if player_contributions:
+        sorted_contributions = sorted(player_contributions, key=lambda x: x[1], reverse=True)
+        report_lines = []
+        report_lines.append("Top 50 Players in Goal Contributions: ")
+        report_lines.append("====================================")
+        for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
+            report_lines.append(f"{i}. {player} (Contributions: {contribution})")
+        report = "\n".join(report_lines)
+        with open("top_goal_contributions_report.txt", "w") as file:
+            file.write(report)
+
+        print("Top 50 Players in Goal Contributions:")
+        print("=====================================")
+        for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
+            print(f"{i}. {player} (Contributions: {contribution})")
+
+        print("Top 50 goal contributions report generated successfully.")
+    else:
+        print("No player contributions found.")
+    
 
 
 #this is the program menu for the user
