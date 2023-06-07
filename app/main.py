@@ -178,11 +178,28 @@ def view_playerstat():
 
 #display the player with the best conversion rate
 def best_conversion_rate():
-    pass
+    best_player = session.query(Player).join(PlayerStat).order_by(PlayerStat.conversion_rate.desc()).first()
+
+    if best_player:
+        print(f"Player with the best conversion rate in the league: {best_player.full_name}")
+        print(f"Conversion Rate: {best_player.playerstat.conversion_rate}")
+    else:
+        print("No players found.")
 
 #display the top twenty scorers and generate a report on txt with the same
 def top_twenty_scorers_report():
-    pass
+    players = session.query(Player).join(PlayerStat).order_by(PlayerStat.goals.desc()).limit(20).all()
+    print("Top 20 Scorers: ")
+    print("******")
+    for i, player in enumerate(players, start=1):
+        print(f"{i}. {player.full_name} - Goals: {player.player_stat.goals} ")
+    
+    with open("top_scorers.txt", "w") as file:
+        file.write("Top 20 Scorers: \n")
+        for i, player in enumerate(players, start = 1):
+            file.write(f"{i}. {player.full_name} - Goals: {player.player_stat.goals} ")
+    
+    print("Top 20 Scorers report generated.")
 
 #display the top twenty assisters
 def top_twenty_assisters():
