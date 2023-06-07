@@ -18,14 +18,54 @@ Base = declarative_base(metadata=metadata)
 #Defining my functions
 #search for a particular team via name
 def find_team():
-    pass
+    teams = session.query(Team).all
+    team_dict = {team.team_name: team for team in teams}
+
+    team_name = input("Enter the name of the team: ")
+    if team_name in team_dict:
+        team = team_dict[team_name]
+        print(f"Team Position: {team.id}")
+        print(f"Team Name: {team.team_name}")
+        print(f"Games Played: {team.played_games}")
+        print(f"Games Won: {team.won_games}")
+        print(f"Games Drawn: {team.drawn_games}")
+        print(f"Games Lost: {team.lost_games}")
+        print(f"Goals Scored: {team.goals_scored}")
+        print(f"Goals Allowed: {team.goals_allowed}")
+        print(f"Goal Difference: {team.goal_difference}")
+        print(f"Points: {team.points}")
+    else:
+        print("Team not found.")
+
+    
 #returns all teams in our teams table
 def view_teams():
-    pass
+    teams = session.query(Team).all()
+    team_list = [team.team_name for team in teams]
+
+    if team_list:
+        print("Teams:")
+        for team_name in team_list:
+            print(team_name)
+    else:
+        print("No teams found.")
+    
 
 #returns all players in a particular team
 def players_in_team():
-    pass
+    name = input("Enter the team name: ")
+    team = session.query(Team).filter_by(team_name=name).first()
+    if team:
+        players = session.query(Player).join(team_player).filter_by(team_id = team.id).all()
+        if players:
+            print(f"Players in {name}:")
+            for player in players:
+                print (f"- {player.full_name}")
+        else:
+            print (f"No players found in {name}.")
+    else:
+        print("Team not found")
+    
 
 #sort teams by goal difference
 def sort_team_goal_difference():
@@ -39,34 +79,45 @@ def sort_team_wins():
 def sort_team_losses():
     pass
 
+#find the coach for a particular team
 def find_coach():
     pass
 
+#show all coaches in the database
 def view_coaches():
     pass
 
-def view_coach_player():
+#view all players for a particular coach
+def view_coach_players():
     pass
 
+#view all players in the database
 def view_players():
     pass
 
+#view stat for a particular player by name
 def view_playerstat():
     pass
 
+#display the player with the best conversion rate
 def best_conversion_rate():
     pass
 
+#display the top twenty scorers and generate a report on txt with the same
 def top_twenty_scorers_report():
     pass
 
+#display the top twenty assisters
 def top_twenty_assisters():
     pass
 
+#displays the player with the most yellow and red cards together
 def most_indisciplined_player():
     pass
 
-
+#displays the top 50 players in goal contributions and generate a report on txt reflexting the same
+def top_def_50_goal_contributions_report():
+    pass
 
 
 
