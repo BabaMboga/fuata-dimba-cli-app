@@ -154,7 +154,27 @@ def view_players():
 
 #view stat for a particular player by name
 def view_playerstat():
-    pass
+    player_name = input("Enter the player name: ")
+    player_stat = session.query(PlayerStat).join(Player).filter(Player.full_name == player_name).first()
+    if player_stat:
+        player_info = (player_stat.goals, player_stat.assists, player_stat.shots, player_stat.goal_contributions,
+                       player_stat.pass_completion_percentage, player_stat.clean_sheets,
+                       player_stat.conversion_rate, player_stat.yellow_cards, player_stat.red_cards)
+        if player_stat:
+            print(f"Stats for {player_name}: ")
+            print(f"- Goals: {player_info[0]}")
+            print(f"- Assists: {player_info[1]}")
+            print(f"- Shots: {player_info[2]}")
+            print(f"- Goal Contributions: {player_info[3]}")
+            print(f"- Pass Completion(%): {player_info[4]}")
+            print(f"- Clean Sheets: {player_info[5]}")
+            print(f"- Conversion Rate: {player_info[6]}")
+            print(f"- Yellow Cards: {player_info[7]}")
+            print(f"- Red Cards: {player_info[8]}")
+        else:
+            print(f"No stats found for {player_name}.")
+    else:
+        print("Player not found.")
 
 #display the player with the best conversion rate
 def best_conversion_rate():
