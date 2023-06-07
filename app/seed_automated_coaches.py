@@ -20,8 +20,7 @@ team_names = ["Manchester City","Arsenal","Manchester United","Newcastle", "Live
 for c in range(20):
     #create a coach
     coach = Coach(
-        first_name = fake.first_name(),
-        second_name = fake.last_name(),
+        full_name=fake.name(),
         nationality = fake.country(),
         age = fake.random_int(min=25, max=60),
     )

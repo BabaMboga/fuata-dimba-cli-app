@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, Table
+from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, Table, create_engine
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -50,8 +50,7 @@ class Coach(Base):
     __tablename__ = 'coaches'
 
     id = Column(Integer(), primary_key=True)
-    first_name = Column(String())
-    second_name = Column(String())
+    full_name = Column(String())
     nationality = Column(String())
     age = Column(Integer())
 
@@ -63,8 +62,7 @@ class Player(Base):
     __tablename__ = 'players'
 
     id = Column(Integer(), primary_key=True)
-    first_name = Column(String())
-    second_name = Column(String())
+    full_name = Column(String())
     nationality = Column(String())
     age = Column(String())
 
