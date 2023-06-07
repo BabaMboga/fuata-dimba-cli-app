@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Team, Coach, Base
+from models import Team, Base
 
 #Defined data for teams
 

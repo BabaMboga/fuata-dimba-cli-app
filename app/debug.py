@@ -14,7 +14,7 @@ Base = declarative_base(metadata=metadata)
 
 if __name__ == '__main__':
 
-    engine = create_engine('sqlite:///fuata_dimba_test.db')
+    engine = create_engine('sqlite:///fuata_dimba.db')
     Session = sessionmaker(bind=engine)
     session = Session()
 

@@ -32,7 +32,7 @@ for p in range(400):
         goals = goals,
         assists = assists,
         goal_contributions = goal_contributions,
-        pass_completion_percentage = fake.random_init(min=0, max=100),
+        pass_completion_percentage = fake.random_int(min=0, max=100),
         clean_sheets = fake.random_int(min=0, max=20),
         conversion_rate = conversion_rate,
         yellow_cards = fake.random_init(min=0, max=20),
