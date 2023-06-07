@@ -104,7 +104,17 @@ def sort_team_losses():
 
 #find the coach for a particular team
 def find_coach():
-    pass
+    name = input("Enter the name of the team: ")
+    team = session.query(Team).filter(Team.team_name == name ).first()
+
+    if team:
+        coach = session.query(Coach).join(team_coach).filter(team_coach.c.team_id == team.id).first()
+        if coach:
+            print(f"The coach of {team.team_name} is {coach.full_name}")
+        else:
+            print(f"No coach found for {team.name}")
+    else:
+        print("Team not found.")
 
 #show all coaches in the database
 def view_coaches():
