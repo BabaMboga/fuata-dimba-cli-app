@@ -1,10 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
-
 from models import Team, Coach, Player, PlayerStat, team_coach, team_player
-
 
 
 convention = {
@@ -15,10 +12,18 @@ metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
+engine = create_engine('sqlite:///fuata_dimba.db', echo=True)
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+
+
 #Defining my functions
 #search for a particular team via name
 def find_team():
-    teams = session.query(Team).all
+    teams = session.query(Team).all()
     team_dict = {team.team_name: team for team in teams}
 
     team_name = input("Enter the name of the team: ")
@@ -53,7 +58,7 @@ def view_teams():
 
 #returns all players in a particular team
 def players_in_team():
-    name = input("Enter the team name: ")
+    name = input("Enter the team name: ").title()
     team = session.query(Team).filter_by(team_name=name).first()
     if team:
         players = session.query(Player).join(team_player).filter_by(team_id = team.id).all()
@@ -104,7 +109,7 @@ def sort_team_losses():
 
 #find the coach for a particular team
 def find_coach():
-    name = input("Enter the name of the team: ")
+    name = input("Enter the name of the team: ").title()
     team = session.query(Team).filter(Team.team_name == name ).first()
 
     if team:
@@ -112,7 +117,7 @@ def find_coach():
         if coach:
             print(f"The coach of {team.team_name} is {coach.full_name}")
         else:
-            print(f"No coach found for {team.name}")
+            print(f"No coach found for {team.team_name}")
     else:
         print("Team not found.")
 
@@ -130,7 +135,7 @@ def view_coaches():
 
 #view all players for a particular coach
 def view_coach_players():
-    coach_name = input("Enter the coach name: ")
+    coach_name = input("Enter the coach name: ").title()
     coach = session.query(Coach).filter_by(full_name=coach_name).first()
     if coach:
         players = session.query(Player).join(team_player).filter(team_player.c.team_id == coach.team.id).all()
@@ -154,7 +159,7 @@ def view_players():
 
 #view stat for a particular player by name
 def view_playerstat():
-    player_name = input("Enter the player name: ")
+    player_name = input("Enter the player name: ").title()
     player_stat = session.query(PlayerStat).join(Player).filter(Player.full_name == player_name).first()
     if player_stat:
         player_info = (player_stat.goals, player_stat.assists, player_stat.shots, player_stat.goal_contributions,
@@ -192,12 +197,12 @@ def top_twenty_scorers_report():
     print("Top 20 Scorers: ")
     print("******")
     for i, player in enumerate(players, start=1):
-        print(f"{i}. {player.full_name} - Goals: {player.player_stat.goals} ")
+        print(f"{i}. {player.full_name} - Goals: {player.playerstat.goals}\n ")
     
     with open("top_scorers.txt", "w") as file:
         file.write("Top 20 Scorers: \n")
         for i, player in enumerate(players, start = 1):
-            file.write(f"{i}. {player.full_name} - Goals: {player.player_stat.goals} ")
+            file.write(f"{i}. {player.full_name} - Goals: {player.playerstat.goals} ")
     
     print("Top 20 Scorers report generated.")
 
@@ -208,7 +213,7 @@ def top_twenty_assisters():
         print("Top 20 Assisters:")
         print("******")
         for player in players:
-            print(f"Player: {player.full_name} ===== {player.playstat.assists}")
+            print(f"Player: {player.full_name} ===== {player.playerstat.assists}")
             print("----------")
 
     else:
@@ -344,9 +349,9 @@ def main_menu():
 
 
 if __name__ == '__main__':
-    engine = create_engine('sqlite:///fuata_dimba.db')
     Base.metadata.create_all(engine)
-    Session = sessionmaker(bind=engine)
     session = Session()
+
+    from models import Team, Coach, Player, PlayerStat, team_coach, team_player
     
     main_menu()
