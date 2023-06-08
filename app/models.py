@@ -85,3 +85,6 @@ class PlayerStat(Base):
     player_id = Column(Integer(), ForeignKey("players.id"), unique=True)
 
     player = relationship('Player', backref=backref('playerstat', uselist=False))
+
+engine = create_engine('sqlite:///fuata_dimba.db')
+Base.metadata.create_all(engine)

@@ -26,7 +26,11 @@ def find_team():
     teams = session.query(Team).all()
     team_dict = {team.team_name: team for team in teams}
 
-    team_name = input("Enter the name of the team: ")
+    team_name = input("Enter the name of the team: ").title()
+    if not team_name:
+        print("Team name cannot be empty.")
+        return
+    
     if team_name in team_dict:
         team = team_dict[team_name]
         print(f"Team Position: {team.id}")
@@ -59,6 +63,10 @@ def view_teams():
 #returns all players in a particular team
 def players_in_team():
     name = input("Enter the team name: ").title()
+    if not name:
+        print("Team name cannot be empty: ")
+        return
+    
     team = session.query(Team).filter_by(team_name=name).first()
     if team:
         players = session.query(Player).join(team_player).filter_by(team_id = team.id).all()
@@ -110,6 +118,10 @@ def sort_team_losses():
 #find the coach for a particular team
 def find_coach():
     name = input("Enter the name of the team: ").title()
+    if not name:
+        print("Coach name cannot be empty.")
+        return
+    
     team = session.query(Team).filter(Team.team_name == name ).first()
 
     if team:
@@ -136,6 +148,10 @@ def view_coaches():
 #view all players for a particular coach
 def view_coach_players():
     coach_name = input("Enter the coach name: ").title()
+    if not coach_name:
+        print("Coach name cannot be empty.")
+        return 
+    
     coach = session.query(Coach).filter_by(full_name=coach_name).first()
     if coach:
         players = session.query(Player).join(team_player).filter(team_player.c.team_id == coach.team.id).all()
@@ -160,6 +176,10 @@ def view_players():
 #view stat for a particular player by name
 def view_playerstat():
     player_name = input("Enter the player name: ").title()
+    if not player_name:
+        print("Player name cannot be empty")
+        return
+    
     player_stat = session.query(PlayerStat).join(Player).filter(Player.full_name == player_name).first()
     if player_stat:
         player_info = (player_stat.goals, player_stat.assists, player_stat.shots, player_stat.goal_contributions,
