@@ -17,14 +17,14 @@ teams = session.query(Team).all()
 for p in range(500):
     #create a player
     coach = fake.random_element(coaches)
-    team = fake.random_element(teams)
+    team = coach.team
 
     player = Player(
         full_name=fake.name(),
         nationality = fake.country(),
         age = fake.random_int(min=16, max=40),
         coach_id = coach.id,
-        team_id = team.id
+        team_id = coach.team_id
     )
 
     #create player stats for the player

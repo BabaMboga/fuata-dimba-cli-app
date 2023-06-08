@@ -71,7 +71,7 @@ def players_in_team():
     
     team = session.query(Team).filter_by(team_name=name).first()
     if team:
-        players = session.query(Player).join(team_player).filter_by(team_id = team.id).all()
+        players = session.query(Player).filter_by(team_id = team.id).all()
         if players:
             print(f"Players in {name}:")
             for player in players:
@@ -127,7 +127,7 @@ def find_coach():
     team = session.query(Team).filter(Team.team_name == name ).first()
 
     if team:
-        coach = session.query(Coach).join(team_coach).filter(team_coach.c.team_id == team.id).first()
+        coach = session.query(Coach).filter(Coach.team_id == team.id).first()
         if coach:
             print(f"The coach of {team.team_name} is {coach.full_name}")
         else:
@@ -156,7 +156,7 @@ def view_coach_players():
     
     coach = session.query(Coach).filter_by(full_name=coach_name).first()
     if coach:
-        players = session.query(Player).join(team_player).filter(team_player.c.team_id == coach.team.id).all()
+        players = session.query(Player).filter(Player.team_id == coach.team.id).all()
         for player in players:
             print(f"Player: {player.full_name}")
     else:
