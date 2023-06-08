@@ -38,7 +38,8 @@ for c in range(20):
     team = session.query(Team).filter_by(team_name=team_name).first()
 
     #assign coach to the team
-    team.coach = coach
+    coach.team_id = team.id
+
 
     #adding coach to the session
     session.add(coach)

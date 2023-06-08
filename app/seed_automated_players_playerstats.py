@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from faker import Faker
-from models import Player, PlayerStat, Base
+from models import Player, PlayerStat,Coach, Team, Base
 
 
 engine = create_engine('sqlite:///fuata_dimba.db')
@@ -10,14 +10,21 @@ session = Session()
 
 fake = Faker()
 
+coaches = session.query(Coach).all()
+teams = session.query(Team).all()
+
 #generate seed data for 500 players
 for p in range(500):
     #create a player
+    coach = fake.random_element(coaches)
+    team = fake.random_element(teams)
 
     player = Player(
         full_name=fake.name(),
         nationality = fake.country(),
         age = fake.random_int(min=16, max=40),
+        coach_id = coach.id,
+        team_id = team.id
     )
 
     #create player stats for the player

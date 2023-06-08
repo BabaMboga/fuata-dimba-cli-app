@@ -41,7 +41,7 @@ class Team(Base):
     goal_difference = Column(Integer)
     points = Column(Integer)
 
-    coach_id = Column(Integer(), ForeignKey('coaches.id'), unique=True)
+    coach = relationship('Team', backref=backref('coach', uselist=False))
 
     players = relationship('Player', secondary=team_player, backref=backref('teams', lazy='dynamic'))
 
@@ -54,8 +54,10 @@ class Coach(Base):
     nationality = Column(String())
     age = Column(Integer())
 
+    team_id = Column(Integer(), ForeignKey('coaches.id'), unique=True)
+
     players = relationship('Player', backref=backref('coach'))
-    team = relationship('Team', backref=backref('coach', uselist=False))
+    
 
 
 class Player(Base):
@@ -67,6 +69,7 @@ class Player(Base):
     age = Column(String())
 
     coach_id = Column(Integer(), ForeignKey('coaches.id'))
+    team_id = Column(Integer(), ForeignKey('teams.id'))
 
 
 class PlayerStat(Base):
