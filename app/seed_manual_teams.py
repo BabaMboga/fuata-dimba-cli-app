@@ -193,6 +193,13 @@ session = Session()
 
 Base.metadata.create_all(engine)
 
+team_entries = session.query(Team).count()
+
+#Limit the entries to 20 if they exceed the limit
+if team_entries > 20:
+    session.query(Team).delete()
+    session.commit()
+
 for data in premier_league:
     team = Team(
         team_name = data["team_name"],

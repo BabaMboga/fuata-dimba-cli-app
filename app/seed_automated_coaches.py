@@ -17,6 +17,14 @@ team_names = ["Manchester City","Arsenal","Manchester United","Newcastle", "Live
               "Crystal Palace", "Chelsea", "Wolves", "Westham", "Bournemouth", "Forest",
               "Everton", "Leicester", "Leeds", "Southampton"]
 
+#checking the existing number of entries
+coach_entries = session.query(Coach).count()
+
+#Limit the entries to 20 if they exceed the limit
+if coach_entries > 20:
+    session.query(Coach).delete()
+    session.commit()
+
 for c in range(20):
     #create a coach
     coach = Coach(
