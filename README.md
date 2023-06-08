@@ -12,9 +12,25 @@ Fuata Dimba uses a personalised database with three distinct tables namely: coac
 
 The fan is able to:
 - view all teams
+- find a specific team
+- view players in a team
+- sort teams by goal difference
+- sort teams by games won
+- sort teams by games lost 
+- find a coach
+- view all coaches
+- view players for a coach
+- view all players
+- view a player's statistics
+- display player with the best conversion rate
+- display top 20 scorers and generate report
+- display top 20 assisters
+- display most idisciplined player
+- display top 50 players in goal contibutions and generate report
+
 ## Demo
 
-Use the link provided to navigate to the Find Advetour ("https://project-adventour.vercel.app/")
+Fork the repo and follow the setup below
 
 
 ## Setup/Installation Requirements IF yu need to contribute to the project
@@ -24,7 +40,7 @@ Use the link provided to navigate to the Find Advetour ("https://project-advento
 - A github account
 
 1. Open your terminal and go to the directory you wish to work from.
-2. Go to the following url using ur github account ("https://github.com/BabaMboga/project-adventour")
+2. Go to the following url using ur github account ("https://github.com/BabaMboga/fuata-dimba-cli-app")
 3. Go to the code tab and clone the ssh key
 4. Go back to the terminal and type git clone <-followed by the ssh key you copied /cloned ->
 5. Enter your new cloned repository and type in code .
@@ -33,12 +49,15 @@ Use the link provided to navigate to the Find Advetour ("https://project-advento
 8. Add the changes (git add .)
 9. Commit changes (git commit -m "<add comment>")
 10. Push your changes (git push origin <branchname>)
-11. use npm start to run the site on your local host.
+11. Use pipenv install and pipenv shell to install all dependencies
+12. In the event the database is deleted run the models.py to create it then run seed data in this order teams, coaches, players & playerstats
+12. Run the main.py and enjoy
 
 ## Technologies Used
 
-This program is built with reactjs using the visual code environment.
-It also has db.json file which contains the data we are going to use to populate the cards.
+This program is built with python 3.10.6 using the visual code environment.
+It also has a database created using sqllite thus Slqalchemy is heavily employed.
+The databases have seeded act that we can use
 
 ## Support and Contact Details
 
