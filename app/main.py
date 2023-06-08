@@ -314,7 +314,7 @@ def main_menu():
         print("........")
         print("\n")
         print("10). View All Players")
-        print("11). View Player Statistics")
+        print("11). View A Player's Statistics")
         print("12). Display Player with the Best Conversion Rate")
         print("13). Display Top 20 Scorers and Generate Report")
         print("14). Display Top 20 Assisters")
