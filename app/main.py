@@ -232,7 +232,7 @@ def most_indisciplined_player():
     
 
 #displays the top 50 players in goal contributions and generate a report on txt reflexting the same
-def top_def_50_goal_contributions_report():
+def top_50_goal_contributions_report():
     players = session.query(Player).all()
     player_contributions = []
     for player in players:
@@ -323,7 +323,24 @@ def main_menu():
             view_coaches()
         elif choice == "9":
             view_coach_players()
-
+        elif choice == "10":
+            view_players()
+        elif choice == "11":
+            view_playerstat()
+        elif choice == "12":
+            best_conversion_rate()
+        elif choice == "13":
+            top_twenty_scorers_report()
+        elif choice == "14":
+            top_twenty_assisters()
+        elif choice == "15":
+            most_indisciplined_player()
+        elif choice == "16":
+            top_50_goal_contributions_report()
+        elif choice == "0":
+            print("Exiting the program.")
+        else:
+            print("Invalid choice. Please try again")
 
 
 if __name__ == '__main__':
