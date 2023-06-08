@@ -24,7 +24,12 @@ for p in range(500):
     shots = fake.random_int(min=0, max=100)
     goals = fake.random_int(min=0, max=50)
     assists = fake.random_int(min=0, max=25)
-    conversion_rate = (goals / shots) * 100 if shots > 0 else 0
+
+    if shots > 0 :
+        conversion_rate = (goals/shots) * 100
+    else:
+        conversion_rate = 0
+    
     goal_contributions = goals + assists
 
     player_stat = PlayerStat(
