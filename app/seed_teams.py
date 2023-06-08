@@ -187,7 +187,7 @@ premier_league = [
     
 ]
 
-engine = create_engine('sqlite:///fuata_dimba.db')
+engine = create_engine('sqlite:///app/fuata_dimba.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
