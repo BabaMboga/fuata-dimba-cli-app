@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from tqdm import tqdm
+import time
 from models import Team, Coach, Player, PlayerStat, team_coach, team_player
 
 
@@ -290,6 +292,10 @@ def top_50_goal_contributions_report():
 
 #this is the program menu for the user
 def main_menu():
+    # Add a 10-second delay with a progress bar
+    for _ in tqdm(range(10), desc="Program Loading...", unit="s"):
+        time.sleep(1)
+
     while True:
         print("===== FUATA DIMBA MENU =====")
         print("\n")
@@ -314,7 +320,7 @@ def main_menu():
         print("........")
         print("\n")
         print("10). View All Players")
-        print("11). View A Player's Statistics")
+        print("11). View a Player's Statistics")
         print("12). Display Player with the Best Conversion Rate")
         print("13). Display Top 20 Scorers and Generate Report")
         print("14). Display Top 20 Assisters")
@@ -364,6 +370,7 @@ def main_menu():
             top_50_goal_contributions_report()
         elif choice == "0":
             print("Exiting the program.")
+            break
         else:
             print("Invalid choice. Please try again")
 
