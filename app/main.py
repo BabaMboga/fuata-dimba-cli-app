@@ -265,7 +265,65 @@ def top_def_50_goal_contributions_report():
 
 #this is the program menu for the user
 def main_menu():
-    pass
+    while True:
+        print("===== FUATA DIMBA MENU =====")
+        print("\n")
+        print("TEAMS")
+        print("........")
+        print("\n")
+        print("1). Find a Team")
+        print("2). View All Teams")
+        print("3). View Players in Team")
+        print("4). Sort Teams by Goal Difference")
+        print("5). Sort Teams by Wins")
+        print("6). Sort Teams by Losses")
+        print("\n")
+        print("COACHES")
+        print("........")
+        print("\n")
+        print("7). Find a Coach")
+        print("8). View All Coaches")
+        print("9). View Players for a Coach ")
+        print("\n")
+        print("PLAYERS & STATISTICS")
+        print("........")
+        print("\n")
+        print("10). View All Players")
+        print("11). View Player Statistics")
+        print("12). Display Player with the Best Conversion Rate")
+        print("13). Display Top 20 Scorers and Generate Report")
+        print("14). Display Top 20 Assisters")
+        print("15). Display Most Indisciplined Player")
+        print("16). Display Top 50 Players in Goal Contributions and Generate Report")
+        print("\n")
+        print(".........")
+        print("\n")
+        print("0). Exit")
+        print("\n")
+        print(".........")
+        print("\n")
+        print("\n")
+
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            find_team()
+        elif choice == "2":
+            view_teams()
+        elif choice == "3":
+            players_in_team()
+        elif choice == "4":
+            sort_team_goal_difference()
+        elif choice == "5":
+            sort_team_wins()
+        elif choice == "6":
+            sort_team_losses()
+        elif choice == "7":
+            find_coach()
+        elif choice == "8":
+            view_coaches()
+        elif choice == "9":
+            view_coach_players()
+
 
 
 if __name__ == '__main__':
