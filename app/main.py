@@ -14,7 +14,7 @@ metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
-engine = create_engine('sqlite:///fuata_dimba.db', echo=True)
+engine = create_engine('sqlite:///app/fuata_dimba.db', echo=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
