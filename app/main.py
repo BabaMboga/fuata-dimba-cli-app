@@ -312,6 +312,7 @@ def top_50_goal_contributions_report():
             report_data.append([i, player, contribution])
 
         print("Top 50 Players in Goal Contributions:")
+        #this line generates the data and displays it as a table on the terminal
         print(tabulate(report_data, headers=headers, tablefmt="grid"))
         print("=====================================")
 
@@ -340,9 +341,11 @@ def main_menu():
     while True:
         current_datetime = datetime.datetime.now()
         print("\n")
+        #this generates the graphical text
         soccer_ball = pyfiglet.Figlet(font="slant")
         print(soccer_ball.renderText("GOAL!!!!"))
         print("\n")
+        #this adds the current date time
         print(current_datetime)
         print("\033[31m===== FUATA DIMBA MENU =====\033[0m")
         print("\n")
