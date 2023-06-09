@@ -2,8 +2,10 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from tqdm import tqdm
+from tabulate import tabulate
 import time
-from models import Team, Coach, Player, PlayerStat, team_coach, team_player
+from models import Team, Coach, Player, PlayerStat
+
 
 
 convention = {
@@ -259,6 +261,35 @@ def most_indisciplined_player():
     
 
 #displays the top 50 players in goal contributions and generate a report on txt reflexting the same
+# def top_50_goal_contributions_report():
+#     players = session.query(Player).all()
+#     player_contributions = []
+#     for player in players:
+#         player_stat = session.query(PlayerStat).filter_by(player_id=player.id).first()
+#         if player_stat:
+#             contribution = player_stat.goals + player_stat.assists
+#             player_contributions.append((player.full_name, contribution))
+
+#     if player_contributions:
+#         sorted_contributions = sorted(player_contributions, key=lambda x: x[1], reverse=True)
+#         report_lines = []
+#         report_lines.append("Top 50 Players in Goal Contributions: ")
+#         report_lines.append("====================================")
+#         for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
+#             report_lines.append(f"{i}. {player} (Contributions: {contribution})")
+#         report = "\n".join(report_lines)
+#         with open("top_goal_contributions_report.txt", "w") as file:
+#             file.write(report)
+
+#         print("Top 50 Players in Goal Contributions:")
+#         print("=====================================")
+#         for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
+#             print(f"{i}. {player} (Contributions: {contribution})")
+
+#         print("Top 50 goal contributions report generated successfully.")
+#     else:
+#         print("No player contributions found.")
+
 def top_50_goal_contributions_report():
     players = session.query(Player).all()
     player_contributions = []
@@ -270,24 +301,21 @@ def top_50_goal_contributions_report():
 
     if player_contributions:
         sorted_contributions = sorted(player_contributions, key=lambda x: x[1], reverse=True)
-        report_lines = []
-        report_lines.append("Top 50 Players in Goal Contributions: ")
-        report_lines.append("====================================")
+        report_data = []
+        headers = ["Rank", "Player", "Contributions"]
         for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
-            report_lines.append(f"{i}. {player} (Contributions: {contribution})")
-        report = "\n".join(report_lines)
-        with open("top_goal_contributions_report.txt", "w") as file:
-            file.write(report)
+            report_data.append([i, player, contribution])
 
         print("Top 50 Players in Goal Contributions:")
+        print(tabulate(report_data, headers=headers, tablefmt="grid"))
         print("=====================================")
-        for i, (player, contribution) in enumerate(sorted_contributions[:50], start=1):
-            print(f"{i}. {player} (Contributions: {contribution})")
+
+        with open("top_goal_contributions_report.txt", "w") as file:
+            file.write(tabulate(report_data, headers=headers, tablefmt="grid"))
 
         print("Top 50 goal contributions report generated successfully.")
     else:
         print("No player contributions found.")
-    
 
 
 #this is the program menu for the user
