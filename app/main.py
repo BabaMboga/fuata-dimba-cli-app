@@ -34,7 +34,7 @@ def find_team():
 
     team_name = input("Enter the name of the team: ").title()
     if not team_name:
-        print("Team name cannot be empty.")
+        print("\033[31mTeam name cannot be empty.\033[0m")
         return
     
     if team_name in team_dict:
@@ -49,8 +49,10 @@ def find_team():
         print(f"Goals Allowed: {team.goals_allowed}")
         print(f"Goal Difference: {team.goal_difference}")
         print(f"Points: {team.points}")
+        print("\n")
+        print("\033[32mTeam Successfully found\033[0m")
     else:
-        print("Team not found.")
+        print("\033[31mTeam not found.\033[0m")
 
     
 #returns all teams in our teams table
@@ -63,14 +65,15 @@ def view_teams():
         for team_name in team_list:
             print(team_name)
     else:
-        print("No teams found.")
+        print("\033[31mTeams not found.\033[0m")
+
     
 
 #returns all players in a particular team
 def players_in_team():
     name = input("Enter the team name: ").title()
     if not name:
-        print("Team name cannot be empty: ")
+        print("\033[31mTeam name cannot be empty: \033[0m]")
         return
     
     team = session.query(Team).filter_by(team_name=name).first()
@@ -83,49 +86,49 @@ def players_in_team():
         else:
             print (f"No players found in {name}.")
     else:
-        print("Team not found")
+        print("\033[31mTeam not found.\033[0m")
     
 
 #sort teams by goal difference
 def sort_team_goal_difference():
     teams = session.query(Team).order_by(Team.goal_difference.desc()).all()
     if teams:
-        print("Teams sorted by Goal Difference:")
+        print("\033[32mTeams sorted by Goal Difference:\033[0m")
         print("*******")
         for team in teams:
             print(f"Team: {team.team_name}")
             print(f"Goal Difference: {team.goal_difference}")
             print("-----------")
     else:
-        print("No teams found.")
+        print("\033[31mTeams not found.\033[0m")
 
 #sort team by games won
 def sort_team_wins():
     teams = session.query(Team).order_by(Team.won_games.desc()).all()
     if teams:
-        print("Teams sorted by Wins:")
+        print("\033[32mTeams sorted by Wins:\033[0m")
         print("-----------")
         for team in teams:
             print(f" -{team.team_name} (Wins: {team.won_games})")
     else:
-        print("No teams found.")
+        print("\033[31mTeams not found.\033[0m")
 
 #sort team by games lost
 def sort_team_losses():
     teams = session.query(Team).order_by(Team.lost_games.desc()).all()
     if teams:
-        print("Teams sorted by Losses: ")
+        print("\033[32mTeams sorted by Games Lost:\033[0m")
         print("-----------")
         for team in teams:
             print(f"- {team.team_name} (Losses: {team.lost_games})")
     else:
-        print("No teams found.")
+        print("\033[31mTeams not found.\033[0m")
 
 #find the coach for a particular team
 def find_coach():
     name = input("Enter the name of the team: ").title()
     if not name:
-        print("Coach name cannot be empty.")
+        print("\033[31mCoach name cannot be empty.\033[0m")
         return
     
     team = session.query(Team).filter(Team.team_name == name ).first()
@@ -137,25 +140,25 @@ def find_coach():
         else:
             print(f"No coach found for {team.team_name}")
     else:
-        print("Team not found.")
+        print("\033[31mTeam not found.\033[0m")
 
 #show all coaches in the database
 def view_coaches():
     coaches = session.query(Coach).all()
     if coaches:
-        print(f"All Coaches: ")
+        print("\033[32mAll Coaches\033[0m")
         print("-----------")
         print("")
         for coach in coaches:
             print(f" - {coach.full_name} from {coach.nationality} is {coach.age}")
     else:
-        print("No coaches found.")
+        print("\033[31mCoaches not found.\033[0m")
 
 #view all players for a particular coach
 def view_coach_players():
     coach_name = input("Enter the coach name: ").title()
     if not coach_name:
-        print("Coach name cannot be empty.")
+        print("\033[31mCoach name cannot be empty.\033[0m")
         return 
     
     coach = session.query(Coach).filter_by(full_name=coach_name).first()
@@ -164,18 +167,18 @@ def view_coach_players():
         for player in players:
             print(f"Player: {player.full_name}")
     else:
-        print("Coach not found.")
+        print("\033[31mCoach not found.\033[0m")
 
 #view all players in the database
 def view_players():
     players = session.query(Player).all()
     if players:
-        print("All Players: ")
+        print("\033[32mAll Players:\033[0m")
         print("-----------")
         for player in players:
             print(f"{player.id} {player.full_name}")
     else:
-        print("No players found.")
+        print("\033[31mPlayers not found.\033[0m")
 
     
 
@@ -183,7 +186,7 @@ def view_players():
 def view_playerstat():
     player_name = input("Enter the player name: ").title()
     if not player_name:
-        print("Player name cannot be empty")
+        print("\033[31mPlayer name cannot be empty.\033[0m")
         return
     
     player_stat = session.query(PlayerStat).join(Player).filter(Player.full_name == player_name).first()
@@ -205,7 +208,7 @@ def view_playerstat():
         else:
             print(f"No stats found for {player_name}.")
     else:
-        print("Player not found.")
+        print("\033[31mPlayer not found.\033[0m")
 
 #display the player with the best conversion rate
 def best_conversion_rate():
@@ -215,12 +218,12 @@ def best_conversion_rate():
         print(f"Player with the best conversion rate in the league: {best_player.full_name}")
         print(f"Conversion Rate: {best_player.playerstat.conversion_rate}")
     else:
-        print("No players found.")
+        print("\033[31mPlayers not found.\033[0m")
 
 #display the top twenty scorers and generate a report on txt with the same
 def top_twenty_scorers_report():
     players = session.query(Player).join(PlayerStat).order_by(PlayerStat.goals.desc()).limit(20).all()
-    print("Top 20 Scorers: ")
+    print("\033[32mTop 20 Scorers:\033[0m")
     print("******")
     for i, player in enumerate(players, start=1):
         print(f"{i}. {player.full_name} - Goals: {player.playerstat.goals}\n ")
@@ -230,20 +233,20 @@ def top_twenty_scorers_report():
         for i, player in enumerate(players, start = 1):
             file.write(f"{i}. {player.full_name} - Goals: {player.playerstat.goals} ")
     
-    print("Top 20 Scorers report generated.")
+    print("\033[32mTop 20 Scorers report generated successfully.\033[0m")
 
 #display the top twenty assisters
 def top_twenty_assisters():
     players = session.query(Player).join(PlayerStat).order_by(PlayerStat.assists.desc()).limit(20).all()
     if players:
-        print("Top 20 Assisters:")
+        print("\033[32mTop 20 Assisters\033[0m")
         print("******")
         for player in players:
             print(f"Player: {player.full_name} ===== {player.playerstat.assists}")
             print("----------")
 
     else:
-        print("No players found.")
+        print("\033[31mPlayer not found.\033[0m")
 
 #displays the player with the most yellow and red cards together
 def most_indisciplined_player():
@@ -259,7 +262,7 @@ def most_indisciplined_player():
         most_indisciplined, total_cards = sorted_indiscipline[0]
         print(f"Most Indisciplined Player: {most_indisciplined} (Total Cards: {total_cards})")
     else:
-        print("No player indiscipline found.")
+        print("\033[31mPlayer indsicipline not recorded.\033[0m")
     
 
 #displays the top 50 players in goal contributions and generate a report on txt reflexting the same
@@ -315,9 +318,9 @@ def top_50_goal_contributions_report():
         with open("top_goal_contributions_report.txt", "w") as file:
             file.write(tabulate(report_data, headers=headers, tablefmt="grid"))
 
-        print("Top 50 goal contributions report generated successfully.")
+        print("\033[32mTop 50 goal contributions report generated successfully.\033[0m")
     else:
-        print("No player contributions found.")
+        print("\033[31mPlayer goal contributions not found.\033[0m")
 
 
 #this is the program menu for the user

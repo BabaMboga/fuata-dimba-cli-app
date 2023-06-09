@@ -2,6 +2,7 @@ from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, Table, cre
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
+#This is my schema and it creates four tables and two joint tables
 convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 }
@@ -10,6 +11,8 @@ metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
+
+#Here are my joint_tables to help in establishing relationships
 team_coach = Table(
     'team_coaches',
     Base.metadata,
@@ -26,7 +29,7 @@ team_player = Table(
     extend_existing=True
 )
 
-
+# These are the main tables
 class Team(Base):
     __tablename__ = 'teams'
 

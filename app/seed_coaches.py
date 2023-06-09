@@ -40,7 +40,7 @@ for i in range(20):
 
 # Assign teams to coaches in a one-to-one manner
 for i in range(len(coaches)):
-    team_name = team_names[i % len(team_names)]  # Use modulo operator for cyclic team assignment
+    team_name = team_names[i % len(team_names)]  # Use modulo operator for cyclic team assignment like repeating a playlist
     team = session.query(Team).filter_by(team_name=team_name).first()
     coaches[i].team_id = team.id
     session.add(coaches[i])

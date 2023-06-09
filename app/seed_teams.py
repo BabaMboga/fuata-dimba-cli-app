@@ -200,6 +200,7 @@ if team_entries > 20:
     session.query(Team).delete()
     session.commit()
 
+#Populates table
 for data in premier_league:
     team = Team(
         team_name = data["team_name"],
