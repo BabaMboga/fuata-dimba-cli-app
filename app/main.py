@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from tqdm import tqdm
 from tabulate import tabulate
 import time
+import datetime
 from models import Team, Coach, Player, PlayerStat
 
 
@@ -320,11 +321,23 @@ def top_50_goal_contributions_report():
 
 #this is the program menu for the user
 def main_menu():
+    
+    print("\n")
+    print("==================================")
+    print("          FUATA DIMBA             ")
+    print("    (c) 2023. All rights reserved.")
+    print("==================================")
+
+
     # Add a 10-second delay with a progress bar
     for _ in tqdm(range(10), desc="Program Loading...", unit="s"):
         time.sleep(1)
 
     while True:
+        current_datetime = datetime.datetime.now()
+        print("\n")
+        print("\n")
+        print(current_datetime)
         print("===== FUATA DIMBA MENU =====")
         print("\n")
         print("TEAMS")
