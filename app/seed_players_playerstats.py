@@ -4,7 +4,7 @@ from faker import Faker
 from models import Player, PlayerStat,Coach, Team, Base
 
 
-engine = create_engine('sqlite:///app/fuata_dimba.db')
+engine = create_engine('sqlite:///fuata_dimba.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
